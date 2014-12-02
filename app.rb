@@ -28,7 +28,7 @@ end
 post "/update" do
   body = JSON.parse(request.body.read)
   score = body["score"].to_i
-  unless body["score"] == body["scorer"]
+  unless body["user"] == body["scorer"]
     $redis.incrby(body["user"], score)
     $redis.sadd("scores", body["user"])
   end
