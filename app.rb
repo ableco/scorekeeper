@@ -19,9 +19,9 @@ get "/" do
   json hash
 end
 
-patch "/update" do
+post "/update" do
   body = JSON.parse(request.body.read)
-  $redis.incrby(body["user"], body["score"])
+  $redis.incrby(body["user"], body["score"].to_i)
   $redis.sadd("scores", body["user"])
   json $redis.get(body["user"])
 end
