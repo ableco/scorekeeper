@@ -16,12 +16,21 @@ end
 get "/" do
   members = $redis.smembers("scores")
   hash = Hash[*(members.collect { |x| [ x, $redis.get(x) ]}).flatten]
-  json hash
+  rankings = hash.sort_by { |name, score| score }
+  string = "<ol>"
+  rankings.reverse.each do |k, v|
+    string << "<li><strong>#{k}</strong> #{v}</li>"
+  end
+  string << "</ol>"
+  string
 end
 
 post "/update" do
   body = JSON.parse(request.body.read)
-  $redis.incrby(body["user"], body["score"].to_i)
-  $redis.sadd("scores", body["user"])
+  score = body["score"].to_i
+  unless body["score"] == body["scorer"]
+    $redis.incrby(body["user"], score)
+    $redis.sadd("scores", body["user"])
+  end
   json $redis.get(body["user"])
 end
