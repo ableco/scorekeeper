@@ -1,0 +1,8 @@
+%h1 EXTRAORDINARY PEOPLE
+
+%ol
+  - @rankings.each do |name, score|
+    %li
+      %strong
+        = name
+      = score
