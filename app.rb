@@ -4,13 +4,24 @@ Bundler.require :default, ENV['RACK_ENV'].to_sym
 require "sinatra/json"
 require "json"
 
+configure do
+  if ENV["REDISCLOUD_URL"]
+    uri = URI.parse(ENV["REDISCLOUD_URL"])
+    $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+  else
+    $redis = Redis.new(:host => "localhost", :port => 6379)
+  end
+end
+
 get "/" do
-  json "go away"
+  members = $redis.smembers("scores")
+  hash = Hash[*(members.collect { |x| [ x, $redis.get(x) ]}).flatten]
+  json hash
 end
 
 patch "/update" do
   body = JSON.parse(request.body.read)
-  puts body["user"]
-  puts body["score"]
-  json "ok"
+  $redis.incrby(body["user"], body["score"])
+  $redis.sadd("scores", body["user"])
+  json $redis.get(body["user"])
 end
