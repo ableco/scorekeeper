@@ -16,9 +16,9 @@ end
 get "/" do
   members = $redis.smembers("scores")
   hash = Hash[*(members.collect { |x| [ x, $redis.get(x) ]}).flatten]
-  rankings = hash.sort_by { |name, score| score }
+  rankings = hash.sort_by { |name, score| score }.reverse
   string = "<ol>"
-  rankings.reverse.each do |k, v|
+  rankings.each do |k, v|
     string << "<li><strong>#{k}</strong> #{v}</li>"
   end
   string << "</ol>"
