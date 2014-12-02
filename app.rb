@@ -18,12 +18,6 @@ get "/" do
   hash = Hash[*(members.collect { |x| [ x, $redis.get(x).to_i ]}).flatten]
   @rankings = hash.sort_by { |name, score| score }.reverse
   haml :scoreboard
-  # string = "<ol>"
-  # @rankings.each do |k, v|
-  #   string << "<li><strong>#{k}</strong> #{v}</li>"
-  # end
-  # string << "</ol>"
-  # string
 end
 
 post "/update" do
