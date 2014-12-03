@@ -33,8 +33,8 @@ post "/update" do
     score = -1
   end
 
-  # if you try to give someone less than -5 points, there's a 25% chance it gets assigned to you instead
-  if score < -5 && rand(4) == 1
+  # if you try to give someone less than -5 points, there's a 90% chance it gets assigned to you instead
+  if score < -5 && rand(10) != 1
     score_recipient = scorer
   end
 
