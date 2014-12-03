@@ -38,8 +38,10 @@ post "/update" do
     score_recipient = scorer
   end
 
-  $redis.incrby(score_recipient, score)
-  $redis.sadd("scores", score_recipient)
+  unless score_recipient == nil or score_recipient == ""
+    $redis.incrby(score_recipient, score)
+    $redis.sadd("scores", score_recipient)
+  end
   
   json "ok"
 end
