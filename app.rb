@@ -20,12 +20,26 @@ get "/" do
   haml :scoreboard
 end
 
+# when too low of a score is sent, there should be a risk of getting that assigned to yourself
 post "/update" do
   body = JSON.parse(request.body.read)
   score = body["score"].to_i
-  unless body["user"] == body["scorer"]
-    $redis.incrby(body["user"], score)
-    $redis.sadd("scores", body["user"])
+  score_recipient = body["user"]
+  scorer = body["scorer"]
+
+  # lose a point if you try to give yourself points
+  if score_recipient == scorer && score > 0
+    score_recipient = scorer
+    score = -1
   end
-  json $redis.get(body["user"])
+
+  # if you try to give someone less than -5 points, there's a 25% chance it gets assigned to you instead
+  if score < -5 && rand(4) == 1
+    score_recipient = scorer
+  end
+
+  $redis.incrby(score_recipient, score)
+  $redis.sadd("scores", score_recipient)
+  
+  json "ok"
 end
