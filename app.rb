@@ -39,7 +39,7 @@ post "/comment" do
   room = body["room"]
 
   if room == "water-cooler"
-    $redis.incrby(commenter, -1)
+    $redis.incrby(commenter, 1)
     $redis.sadd("scores", commenter)
   end
   
