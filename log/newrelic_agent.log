@@ -39,3 +39,16 @@
 [12/11/14 13:53:19 -0500 Ben-Tates-MacBook-Pro.local (47287)] INFO : Finished instrumentation
 [12/11/14 13:53:19 -0500 Ben-Tates-MacBook-Pro.local (47287)] INFO : Reporting to: https://rpm.newrelic.com/accounts/837690/applications/7223077
 [12/11/14 13:53:23 -0500 Ben-Tates-MacBook-Pro.local (47287)] INFO : Doing deferred dependency-detection before Rack startup
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Starting the New Relic agent in "development" environment.
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : To prevent agent startup add a NEWRELIC_AGENT_ENABLED=false environment variable or modify the "development" section of your newrelic.yml.
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Reading configuration from config/newrelic.yml (/Users/blim/workspace/scorekeeper)
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Environment: development
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : No known dispatcher detected.
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Application: My Application (Development)
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Installing Net instrumentation
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Installing Sinatra instrumentation
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Installing deferred Rack instrumentation
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Installing Rack::Builder middleware instrumentation
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Finished instrumentation
+[12/11/14 14:05:57 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Reporting to: https://rpm.newrelic.com/accounts/837690/applications/7223077
+[12/11/14 14:06:07 -0500 Ben-Tates-MacBook-Pro.local (48163)] INFO : Doing deferred dependency-detection before Rack startup
