@@ -20,7 +20,6 @@ get "/" do
   haml :scoreboard
 end
 
-# when too low of a score is sent, there should be a risk of getting that assigned to yourself
 post "/update" do
   body = JSON.parse(request.body.read)
   score = body["score"].to_i
