@@ -52,7 +52,7 @@ post "/plus_and_minus" do
   score_recipient = body["user"]
   scorer = body["scorer"]
 
-  scorers_points = $redis.get(scorer)
+  scorers_points = $redis.get(scorer).to_i
   
   unless scorers_points <= 0
     absolute_value_of_score = score.abs
