@@ -32,6 +32,7 @@ get "/" do
   haml :scoreboard
 end
 
+# get a point for every comment
 post "/comment" do
   body = JSON.parse(request.body.read)
   commenter = body["user"]
@@ -39,7 +40,7 @@ post "/comment" do
 
   if room == "water-cooler"
     $redis.incrby(commenter, -1)
-    $redis.sadd("scores", score_recipient)
+    $redis.sadd("scores", commenter)
   end
   
   json "ok"
@@ -51,26 +52,42 @@ post "/plus_and_minus" do
   score_recipient = body["user"]
   scorer = body["scorer"]
 
-  # lose a point if you try to give yourself points
-  if score_recipient == scorer && score > 0
-    score_recipient = scorer
-    score = -1
+  scorers_points = $redis.get(scorer)
+  
+  unless scorers_points <= 0
+    absolute_value_of_score = score.abs
+    # change the score to the max their score allows if the scorers points are less than the absolute value of the score
+    if scorers_points < absolute_value_of_score
+      score = scorers_points * (score > 0 ? 1 : -1)
+    end
+
+    # decrenment scorer's score
+    $redis.incrby(scorer, (score.abs * -1))
+
+    $redis.incrby(score_recipient, score)    
   end
 
-  # if you try to give someone less than -5 points, there's a 90% chance it gets assigned to you instead
-  if score < -5 && rand(10) != 1
-    score_recipient = scorer
-  end
 
-  # no +0 hack
-  if score == 0
-    score = -1
-  end
+  # # lose a point if you try to give yourself points
+  # if score_recipient == scorer && score > 0
+  #   score_recipient = scorer
+  #   score = -1
+  # end
 
-  unless score_recipient == nil or score_recipient == ""
-    $redis.incrby(score_recipient, score)
-    $redis.sadd("scores", score_recipient)
-  end
+  # # if you try to give someone less than -5 points, there's a 90% chance it gets assigned to you instead
+  # if score < -5 && rand(10) != 1
+  #   score_recipient = scorer
+  # end
+
+  # # no +0 hack
+  # if score == 0
+  #   score = -1
+  # end
+
+  # unless score_recipient == nil or score_recipient == ""
+  #   $redis.incrby(score_recipient, score)
+  #   $redis.sadd("scores", score_recipient)
+  # end
   
   json "ok"
 end
