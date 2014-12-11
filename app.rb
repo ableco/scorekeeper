@@ -32,7 +32,20 @@ get "/" do
   haml :scoreboard
 end
 
-post "/update" do
+post "/comment" do
+  body = JSON.parse(request.body.read)
+  commenter = body["user"]
+  room = body["room"]
+
+  if room == "water-cooler"
+    $redis.incrby(commenter, -1)
+    $redis.sadd("scores", score_recipient)
+  end
+  
+  json "ok"
+end
+
+post "/plus_and_minus" do
   body = JSON.parse(request.body.read)
   score = body["score"].to_i
   score_recipient = body["user"]
