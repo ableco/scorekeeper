@@ -37,6 +37,11 @@ post "/update" do
     score_recipient = scorer
   end
 
+  # no +0 hack
+  if score == 0
+    score = -1
+  end
+
   unless score_recipient == nil or score_recipient == ""
     $redis.incrby(score_recipient, score)
     $redis.sadd("scores", score_recipient)
