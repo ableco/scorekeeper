@@ -1,9 +1,30 @@
-%h1 EXTRAORDINARY PEOPLE
-%h4 (ranked in order of extraordinariness)
+!!!
+%html
+  %head
+    %title
+      Disrupto
+    %link{ :rel => "stylesheet", :href => "/css/bootstrap.css" }
+    %link{ :rel => "stylesheet", :href => "/css/bootstrap-responsive.css" }
+    %link{ :rel => "stylesheet", :href => "/css/application.css" }
 
-%ol
-  - @rankings.each do |name, score|
-    %li
-      %strong
-        = name
-      = score
+  %body
+    .container
+      .row
+        .col-md-12
+          &nbsp;
+      .row
+        .container.logo.col-md-4
+          %img{ :src => "/images/disrupto.png" }
+        .container.extraordinary-people.col-md-8
+          %h1 EXTRAORDINARY PEOPLE
+          %h4 (ranked in order of extraordinariness)
+
+          %ol
+            - @rankings.each do |name, score|
+              %li
+                %strong
+                  = name
+                = score
+
+    %script{ :src => "//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" }
+    %script{ :src => "/js/bootstrap.min.js" }
