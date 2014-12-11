@@ -1,3 +1,7 @@
-h1 { font-size: 75px; }
-h4 { font-size: 40px; }
-li { font-size: 25px; }
+body {
+  padding: 100px;
+}
+
+.extraordinary-people {
+  padding-top: 35px;
+}
