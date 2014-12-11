@@ -18,9 +18,19 @@
           %table
             %thead
               %th(colspan=2)
-                Extraordinary People
-                %br
-                (in order of extraordinariness)
+                Extraordinary people
+            %tbody
+              - @rankings.slice!(0,3).each_with_index do |ranking, index|
+                %tr.top-ranked{ :class => "position-#{index}"}
+                  %td.name
+                    = ranking[0]
+                  %td
+                    = ranking[1]
+        .container.extraordinary-people.col-md-4
+          %table
+            %thead
+              %th(colspan=2)
+                Everyone else
             %tbody
               - @rankings.each do |name, score|
                 %tr

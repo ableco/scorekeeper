@@ -17,6 +17,18 @@ get "/" do
   members = $redis.smembers("scores")
   hash = Hash[*(members.collect { |x| [ x, $redis.get(x).to_i ]}).flatten]
   @rankings = hash.sort_by { |name, score| score }.reverse
+  @rankings = [
+    ["Ben", 30],
+    ["Ben", 23],
+    ["Ben", 13],
+    ["Ben", 1],
+    ["Ben", -1],
+    ["Ben", -3],
+    ["Ben", -22],
+    ["Ben", -32323],
+    ["Ben", -55553],
+    ["Ben", -99993]
+  ]
   haml :scoreboard
 end
 

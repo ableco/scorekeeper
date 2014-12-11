@@ -9,3 +9,19 @@ body {
 .logo {
   margin-left: -16px;
 }
+
+tr.top-ranked td {
+  font-size: 65px;
+}
+
+tr.top-ranked.position-0 td {
+  color: gold;
+}
+
+tr.top-ranked.position-1 td {
+  color: silver;
+}
+
+tr.top-ranked.position-2 td {
+  color: #cd7f32;
+}
