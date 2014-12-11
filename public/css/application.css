@@ -1,5 +1,9 @@
 body {
   padding: 80px;
+  background-image: url(../images/bg.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  filter: grayscale(100%);
 }
 
 .extraordinary-people {
@@ -24,4 +28,14 @@ tr.top-ranked.position-1 td {
 
 tr.top-ranked.position-2 td {
   color: #cd7f32;
+}
+
+.red {
+  background-color: #000000;
+  opacity: 0.85;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
 }
