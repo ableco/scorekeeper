@@ -32,6 +32,11 @@ get "/" do
   haml :scoreboard
 end
 
+get "/scores" do
+  members = $redis.smembers("scores")
+  json members.collect { |x| { :name => x, :score => $redis.get(x).to_i } }.sort{ |x, y| x["score"] <=> y["score"] }.reverse
+end
+
 # get a point for every comment
 post "/comment" do
   body = JSON.parse(request.body.read)
@@ -43,6 +48,16 @@ post "/comment" do
     $redis.sadd("scores", commenter)
   end
   
+  json "ok"
+end
+
+post "/trivia_answer" do
+  body = JSON.parse(request.body.read)
+  answerer = body["user"]
+  points = body["points"].to_i
+  $redis.incrby(answerer, points)
+  $redis.sadd("scores", answerer)
+
   json "ok"
 end
 
