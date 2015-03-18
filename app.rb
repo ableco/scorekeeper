@@ -2,9 +2,12 @@ ENV['RACK_ENV'] ||= 'development'
 require "bundler/setup"
 Bundler.require :default, ENV['RACK_ENV'].to_sym
 require "sinatra/json"
+require 'sinatra/cross_origin'
+
 require "json"
 
 configure do
+  enable :cross_origin
   if ENV["REDISCLOUD_URL"]
     uri = URI.parse(ENV["REDISCLOUD_URL"])
     $redis = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
@@ -17,18 +20,6 @@ get "/" do
   members = $redis.smembers("scores")
   hash = Hash[*(members.collect { |x| [ x, $redis.get(x).to_i ]}).flatten]
   @rankings = hash.sort_by { |name, score| score }.reverse
-  # @rankings = [
-  #   ["Ben", 30],
-  #   ["Ben", 23],
-  #   ["Ben", 13],
-  #   ["Ben", 1],
-  #   ["Ben", -1],
-  #   ["Ben", -3],
-  #   ["Ben", -22],
-  #   ["Ben", -32323],
-  #   ["Ben", -55553],
-  #   ["Ben", -99993]
-  # ]
   haml :scoreboard
 end
 
