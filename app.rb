@@ -16,12 +16,13 @@ configure do
   end
 end
 
-# get "/" do
-#   members = $redis.smembers("scores")
-#   hash = Hash[*(members.collect { |x| [ x, $redis.get(x).to_i ]}).flatten]
-#   @rankings = hash.sort_by { |name, score| score }.reverse
-#   haml :scoreboard
-# end
+get "/" do
+  # members = $redis.smembers("scores")
+  # hash = Hash[*(members.collect { |x| [ x, $redis.get(x).to_i ]}).flatten]
+  # @rankings = hash.sort_by { |name, score| score }.reverse
+  # haml :scoreboard
+  haml :index
+end
 
 get "/scores" do
   members = $redis.smembers("scores")
