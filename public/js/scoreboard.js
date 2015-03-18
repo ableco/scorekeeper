@@ -58,6 +58,6 @@ var Scoreboard = React.createClass({
 });
 
 React.render(
-  <Scoreboard url="http://disrupto-scorekeeper.herokuapp.com/scores" pollInterval={5000} />,
+  <Scoreboard url="scores" pollInterval={5000} />,
   document.getElementById('content')
 );
